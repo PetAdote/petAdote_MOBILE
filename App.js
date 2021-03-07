@@ -7,6 +7,21 @@ import { createStackNavigator } from '@react-navigation/stack'
 
 import  TelaLogin  from './src/pages/LoginPage'
 
+ /*
+import  TelaCadastro3 from './src/pages/CadastroPage3' 
+
+function CadastroPage3() {
+
+ 
+  return(
+
+    <TelaCadastro3></TelaCadastro3>
+
+  )
+  
+}
+*/
+
 function LoginPage() {
 
   return(
@@ -16,6 +31,7 @@ function LoginPage() {
   )
   
 }
+
 
 const Stack = createStackNavigator()
 
