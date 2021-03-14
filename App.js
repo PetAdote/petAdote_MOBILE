@@ -6,6 +6,9 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import  TelaLogin  from './src/pages/LoginPage'
+import TelaCadastro1 from './src/pages/CadastroPage1'
+import TelaCadastro2 from './src/pages/CadastroPage2'
+import TelaCadastro3 from './src/pages/CadastroPage3'
 
  /*
 import  TelaCadastro3 from './src/pages/CadastroPage3' 
@@ -32,8 +35,25 @@ function LoginPage() {
   
 }
 
-
-const Stack = createStackNavigator()
+const Stack = createStackNavigator(/*{
+  "Cadastro1": {
+    screen: TelaCadastro1
+  }
+}, { 
+  defaultNavigationOptions: {
+    title: 'TituloDaSuaPagina',
+    headerStyle:{
+      backgroundColor: '#d7d7d7',
+      borderBottomWidth: 3,
+      borderBottomColor: '#c5c5c5'
+    },
+    headerTitleStyle: {
+      fontSize: 25,
+      flexGrow: 1,
+      textAlign: 'center'
+    }
+  }
+}*/)
 
 function App() {
 
@@ -44,34 +64,54 @@ function App() {
       <Stack.Navigator>
 
         <Stack.Screen
-          name="Login PetAdote"
+          name="LoginPetAdote"
           component={ TelaLogin }
           options={
 
-          {
+            {
 
-            headerShown: false,
-            
-            /*
-            headerTintColor: '#CCC',
-
-            headerStyle: {
-
-              backgroundColor: '#674ea7',
-              borderBottomColor: '#674ea7',
-
-            },
-        
-            headerTitleStyle: {
-
-              color: '#FFF',
-              fontSize: 0
-
+              headerShown: false,
+              
             }
-            */
-          }
 
-        }
+          }
+          
+        />
+
+        <Stack.Screen 
+          name="CadastroPetAdote"
+          component={ TelaCadastro1 }
+          options = {
+            {
+
+              headerShown: false,
+              
+            }
+          }
+        />
+
+        <Stack.Screen
+          name="CadastroPetAdote2"
+          component={ TelaCadastro2 }
+          options = {
+            {
+
+              headerShown: false,
+                  
+            }
+          }
+        />
+
+        <Stack.Screen
+          name="CadastroPetAdote3"
+          component={ TelaCadastro3 }
+          options = {
+            {
+
+              headerShown: false,
+                  
+            }
+          }
         />
 
       </Stack.Navigator>
