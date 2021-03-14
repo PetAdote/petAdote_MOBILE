@@ -5,6 +5,11 @@ import FormRow from '../component/FormRow'
 
 export class TelaCadastro3 extends React.Component {
 
+    constructor(props){
+
+        super(props)
+      }    
+
     render() {
 
         return (
@@ -144,7 +149,7 @@ export class TelaCadastro3 extends React.Component {
 
 
                             <View>
-                                <TouchableOpacity style={styles.btnLogin}>
+                                <TouchableOpacity style={styles.btnLogin} onPress={() => {this.props.navigation.navigate('LoginPetAdote');}}>
                                     <Text style={styles.submitLogin}>Login</Text>
                                 </TouchableOpacity>
                             </View>

@@ -10,8 +10,21 @@ import {
     Button,
 } from 'react-native';
 import FormRow from '../component/FormRow.js';
+//import TelaCadastro1 from './CadastroPage1';
+//import  TelaLogin  from './src/pages/LoginPage'
+//import TelaCadastro1 from './src/pages/CadastroPage1'
+//import { NavigationContainer } from '@react-navigation/native'
+//import { createStackNavigator } from '@react-navigation/stack'
+
+//const Stack = createStackNavigator();
 
 export class TelaLogin extends React.Component {
+
+  //Criar props para ligar para próxima tela.
+  constructor(props){
+
+    super(props)
+  }
 
     render() {
         
@@ -72,10 +85,10 @@ export class TelaLogin extends React.Component {
                 </TouchableOpacity>
               </View>
 
-              <Text>                      </Text>
+            <Text>                      </Text>
 
               <View>
-                <TouchableOpacity style={styles.btnCriar}>
+                <TouchableOpacity style={styles.btnCriar} onPress={() => {this.props.navigation.navigate('CadastroPetAdote');}}>
                   <Text style={styles.submitCriar}>Não tem conta?</Text>
                   <Text style={styles.submitCriar}>Crie uma aqui!</Text>
                 </TouchableOpacity>
@@ -98,6 +111,7 @@ export class TelaLogin extends React.Component {
             </View>
 
           </KeyboardAvoidingView>
+
 
         </View>
     )

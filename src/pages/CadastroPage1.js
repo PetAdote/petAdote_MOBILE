@@ -1,8 +1,14 @@
 import React from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native'
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView, AppRegistry} from 'react-native'
 import FormRow from '../component/FormRow'
 
 export class TelaCadastro1 extends React.Component {
+
+
+    constructor(props){
+
+        super(props)
+      }
 
     render() {
 
@@ -139,7 +145,7 @@ export class TelaCadastro1 extends React.Component {
 
 
                             <View>
-                                <TouchableOpacity style={styles.btnLogin}>
+                                <TouchableOpacity style={styles.btnLogin} onPress={() => {this.props.navigation.navigate('LoginPetAdote');}}>
                                     <Text style={styles.submitLogin}>Login</Text>
                                 </TouchableOpacity>
                             </View>
@@ -147,7 +153,7 @@ export class TelaCadastro1 extends React.Component {
                             <Text>                                              </Text>
 
                             <View>
-                                <TouchableOpacity style={styles.btnProximo}>
+                                <TouchableOpacity style={styles.btnProximo} onPress={() => {this.props.navigation.navigate('CadastroPetAdote2');}}>
                                     <Text style={styles.submitTextProximo}>Proximo</Text>
                                 </TouchableOpacity>
                             </View>
