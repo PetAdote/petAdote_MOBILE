@@ -81,7 +81,7 @@ export class TelaLogin extends React.Component {
 
               <View>
                 <TouchableOpacity style={styles.btnSubmit}>
-                  <Text style={styles.submitTextAcessar}>Acessar      <Image source={require('../../assets/entrar.png')}/></Text>
+                  <Text style={styles.submitTextAcessar}  onPress={() => {this.props.navigation.navigate('HomePage');}}>Acessar      <Image source={require('../../assets/entrar.png')}/></Text>
                 </TouchableOpacity>
               </View>
 
