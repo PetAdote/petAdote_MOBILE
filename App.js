@@ -9,6 +9,10 @@ import  TelaLogin  from './src/pages/LoginPage'
 import TelaCadastro1 from './src/pages/CadastroPage1'
 import TelaCadastro2 from './src/pages/CadastroPage2'
 import TelaCadastro3 from './src/pages/CadastroPage3'
+import Home from './src/pages/HomePage';
+import BotaoAdicionar from './src/component/AdicionarButton'
+import BotaoPerfil from './src/component/PerfilButton';
+import LogoPetAdote from './src/component/HeaderLogo';
 
  /*
 import  TelaCadastro3 from './src/pages/CadastroPage3' 
@@ -110,6 +114,26 @@ function App() {
 
               headerShown: false,
                   
+            }
+          }
+        />
+
+        <Stack.Screen
+          name="HomePage"
+          component={ Home }
+          options =  {
+            {
+
+              headerShown: true,
+              title: <LogoPetAdote/>,
+              headerLeft : BotaoAdicionar,
+              headerRight: BotaoPerfil,
+              headerBackTitle: LogoPetAdote,
+              headerTitleAlign: 'center',
+              headerStyle: {
+                backgroundColor: '#674ea7',
+              }
+
             }
           }
         />

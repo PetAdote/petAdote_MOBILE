@@ -158,7 +158,7 @@ export class TelaCadastro3 extends React.Component {
 
                             <View>
                                 <TouchableOpacity style={styles.btnProximo}>
-                                    <Text style={styles.submitTextProximo}>Proximo</Text>
+                                    <Text style={styles.submitTextProximo} onPress={() => {this.props.navigation.navigate('HomePage');}}>Finalizar</Text>
                                 </TouchableOpacity>
                             </View>
 
