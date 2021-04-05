@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
         fontSize: 4,
     },
     PerfilVetor: {
-        maxHeight: 49,
-        maxWidth: 49,
+        height: 48,
+        width: 48,
     },
 })
 

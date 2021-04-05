@@ -1,7 +1,8 @@
 import React from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native'
+import BarraMomentos from '../component/BarraMomentos'
 import FormRow from '../component/FormRow'
-
+import BotaoPesquisar from '../component/BotaoPesquisar'
 
 export class Home extends React.Component {
 
@@ -18,11 +19,12 @@ export class Home extends React.Component {
 
                 <KeyboardAvoidingView>
 
-                    <ScrollView>
+                    <View style={styles.flexBoxStoriesPesquisar}>      
 
-                        
+                        <BarraMomentos/>
+                        <BotaoPesquisar/>
 
-                    </ScrollView>
+                    </View>
 
                 </KeyboardAvoidingView>
 
@@ -37,6 +39,9 @@ const styles = StyleSheet.create({
         flex:1,
         backgroundColor: '#93c47d',
       },
+    flexBoxStoriesPesquisar: {
+        flexDirection: 'row',
+    },  
     
 })
 
