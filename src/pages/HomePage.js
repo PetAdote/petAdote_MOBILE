@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, Touchab
 import BarraMomentos from '../component/BarraMomentos'
 import FormRow from '../component/FormRow'
 import BotaoPesquisar from '../component/BotaoPesquisar'
+import CaixaDePostagem from '../component/CaixaDePostagem'
+import AnuncioMomentos from '../component/BarraAnunciosMomentos'
 
 export class Home extends React.Component {
 
@@ -17,7 +19,7 @@ export class Home extends React.Component {
 
             <View style={styles.background}>
 
-                <KeyboardAvoidingView>
+                <ScrollView>
 
                     <View style={styles.flexBoxStoriesPesquisar}>      
 
@@ -26,7 +28,35 @@ export class Home extends React.Component {
 
                     </View>
 
-                </KeyboardAvoidingView>
+                    <AnuncioMomentos/>
+
+                    <View style={styles.flexBoxCaixaDePostagem}>
+
+                        <View style={styles.PostagensAEsquerda}>
+
+                            <CaixaDePostagem/>
+                            <CaixaDePostagem/>
+                            <CaixaDePostagem/>
+                            <CaixaDePostagem/>
+                            <CaixaDePostagem/>
+
+                        </View>
+
+                        <Text>            </Text>
+
+                        <View style={styles.PostagensADireita}>
+
+                            <CaixaDePostagem/>
+                            <CaixaDePostagem/>
+                            <CaixaDePostagem/>
+                            <CaixaDePostagem/>
+                            <CaixaDePostagem/>
+
+                        </View>
+
+                    </View>
+
+                </ScrollView>
 
             </View>
         )
@@ -42,6 +72,17 @@ const styles = StyleSheet.create({
     flexBoxStoriesPesquisar: {
         flexDirection: 'row',
     },  
+    flexBoxCaixaDePostagem: {
+        flexDirection: 'row',
+    },
+    PostagensAEsquerda: {
+        marginTop: 15,
+        marginLeft: 10,
+    },
+    PostagensADireita: {
+        marginTop: 15,
+        marginRight: 10,
+    },
     
 })
 

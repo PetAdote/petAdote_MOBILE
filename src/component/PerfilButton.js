@@ -1,20 +1,22 @@
 import React from 'react'
+import { render } from 'react-dom'
 import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native'
 import FormRow from '../component/FormRow'
+import { useNavigation } from '@react-navigation/native';
+import FotoPerfil from '../component/FotoDePerfil'
 
 function BotaoPerfil() {
 
-  
+    const navigation = useNavigation(); 
 
         return (
 
 
             <View style={styles.AlinharBotaoEsquerdo}>
 
-                <TouchableOpacity style={styles.BotaoMais}>
+                <TouchableOpacity style={styles.BotaoMais} onPress={() => {navigation.navigate('PerfilDoUsuario');}}>
 
-                    <Image source={require('../../assets/perfil-vetor2.png')} style={styles.PerfilVetor}/>
-                    <Text style={styles.AjustarLinha}> </Text>
+                    <FotoPerfil style={styles.PerfilVetor}/>
                     
                 </TouchableOpacity>
 
@@ -22,7 +24,6 @@ function BotaoPerfil() {
             
             
         )
-    
 }
 
 const styles = StyleSheet.create({
@@ -46,9 +47,6 @@ const styles = StyleSheet.create({
         marginRight: 13,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    AjustarLinha: {
-        fontSize: 4,
     },
     PerfilVetor: {
         maxHeight: 49,
