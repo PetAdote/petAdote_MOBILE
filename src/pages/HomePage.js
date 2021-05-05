@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
     background:{
         flex:1,
         backgroundColor: '#93c47d',
+        alignItems: 'center',
       },
     flexBoxStoriesPesquisar: {
         flexDirection: 'row',

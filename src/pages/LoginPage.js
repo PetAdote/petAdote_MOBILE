@@ -67,6 +67,7 @@ export class TelaLogin extends React.Component {
                   autoCorrect={false}
                   onChangeText={()=>{}}
                   style={styles.inputSenha}
+                  secureTextEntry={true}
                 ></TextInput>
 
               </FormRow>

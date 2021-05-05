@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
 
     background:{
         backgroundColor: '#93c47d',
+        alignItems: 'center',
       },
     scrollView:{
         maxHeight: 1150,

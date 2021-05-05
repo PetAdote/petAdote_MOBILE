@@ -1,14 +1,15 @@
 import React from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native'
 import FormRow from '../component/FormRow'
+import { useNavigation } from '@react-navigation/native';
+
 
 function CaixaDePostagem() {
 
-  
+    const navigation = useNavigation();
 
         return (
-
-
+            
             <View style={styles.estiloPostagem}>
 
                 <View style={styles.BarraMarrom}>
@@ -24,7 +25,7 @@ function CaixaDePostagem() {
 
                 <View style={styles.alinharImagem}>
 
-                    <TouchableOpacity style={styles.TouchableimagemPostagem}>
+                    <TouchableOpacity style={styles.TouchableimagemPostagem} onPress={() => {navigation.navigate('detalhesDoAnuncio');}}>
 
                         <Image source={require('../../assets/imagemPostagemX.png')} style={styles.imagemPostagem}/>
 
