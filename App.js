@@ -1,7 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { render } from 'react-dom';
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button} from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import  TelaLogin  from './src/pages/LoginPage'
@@ -26,16 +23,35 @@ function LoginPage() {
 
 const Stack = createStackNavigator()
 
-export const meuClientToken = meuAccessToken();
+//export const meuClientToken = meuAccessToken();
 
 function App() {
 
-  meuAccessToken();
+  const [token, setToken] = useState({});
+
+  useEffect(() => {
+
+    meuAccessToken()
+    .then((result) =>{
+      console.log('MeuClientToken: ', result)
+      setToken(result);
+    })
+    .catch((error) =>{
+      console.log("Opa, temos um probleminha aqui: ", error)
+  })
+
+  }, []);
+
+  console.log('-------------------------------------------------------------------------------');
+  console.log('MeuClientToken Antes do Retorno do JSX: ', token);
+  console.log('-------------------------------------------------------------------------------');
 
     return(
 
       <NavigationContainer>
-
+        { console.log('---------------------------------------------------------------------------') }
+        { console.log('MeuClientToken no Retorno do JSX', token) }
+        { console.log('---------------------------------------------------------------------------') }
         <Stack.Navigator>
 
           <Stack.Screen
@@ -132,4 +148,5 @@ function App() {
       )
 
 }
+
 export default App

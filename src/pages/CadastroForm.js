@@ -1,9 +1,9 @@
-import React from 'react'
 import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, TextInput} from 'react-native'
 import FormRow from '../component/FormRow'
 import * as ImagePicker from 'expo-image-picker'
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import axios from 'axios';
+import React from 'react';
 //import api from '../services/api'
 //import Autenticacao, { token } from '../component/AutenticarCliente';
 //import * as SecureStore from 'expo-secure-store';
@@ -12,6 +12,18 @@ import meuAccessToken from "../services/AutenticarCliente"
 import meuClientToken from '../../App'
 
 export class CadastroForm extends React.Component {
+
+    componentDidMount(){
+    
+        meuAccessToken()
+        .then((result) => {
+            this.state.token = result
+        })
+        .catch((error) =>{
+            console.log("Opa, temos um probleminha aqui: ", error.response)
+        })
+
+    }
 
     _pickImage = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -60,7 +72,10 @@ export class CadastroForm extends React.Component {
                 logadouroUsuario : '',
                 numeroUsuario : '',
                 complementoUsuario : '',
+                cpf : '',
+                telefone : '',
 
+                token : null,
             }
         }
         
@@ -73,41 +88,44 @@ export class CadastroForm extends React.Component {
     ProximaTela(){
         //this.props.navigation.navigate('HomePage');
 
-        console.log(meuClientToken)
+        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+        console.log('TOKEN ENVIADO COM SUCESSO ==>', this.state.token)
+        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
         axios.post('http://179.213.88.128:3000/contas/', 
         {
 
-            usuario : { 
                 email: this.state.emailUsuario,
                 senha: this.state.senhaUsuario,
                 confirma_senha: this.state.confirmarSenhaUsuario,
+
                 primeiro_nome: this.state.nomeUsurario,
                 sobrenome: this.state.sobreNomeUsurario,
                 data_nascimento: this.state.dataDeNascimentoUsuario,
-                //cpf: this.state.,	// A REST API normaliza variações como 12345678912.
-                //telefone: '(01) 91234-4321',	// Aceita variações.
+                cpf: this.state.cpf,
+                telefone: this.state.telefone,
                 descricao: this.state.biosUsuario,
-                cep: this.state.cepUsuario,	// Aceita variações.
-                numero: this.state.numeroUsuario,
+
+                cep: this.state.cepUsuario,
                 logradouro: this.state.logadouroUsuario,
+                numero: this.state.numeroUsuario,
                 bairro: this.state.bairroUsuario,
                 cidade: this.state.cidadeUsuario,
+                complemento: this.state.complementoUsuario,
                 uf: this.state.estadoUsuario,
-            }
 
         },
         {
 
         headers : {
-            'Authorization': `Bearer ${meuClientToken}`
+            'Authorization': `Bearer ${this.state.token}`
         }
         })
         .then((successResult) => {
-        console.log(successResult);
+            console.log(successResult.response);
         })
         .catch((errorResult) => {
-        console.log(errorResult);
+            console.error('Temos um problema ==>', errorResult.response);
         });
 
     }
@@ -170,6 +188,14 @@ export class CadastroForm extends React.Component {
 
     onChangeComplemento (complementoUsuario) {
         this.setState({ complementoUsuario });
+    }
+
+    onChangeCPF (cpf) {
+        this.setState({ cpf });
+    }
+
+    onChangeTelefone (telefone) {
+        this.setState({ telefone });
     }
 
   render() {
@@ -480,6 +506,34 @@ export class CadastroForm extends React.Component {
                                     value={this.state.complementoUsuario}
                                     onChangeText={(valueComplemento) => this.onChangeComplemento(valueComplemento)}
                                     style={styles.inputComplemento}
+                                ></TextInput>
+
+                            </FormRow>
+
+                            <Text style={styles.textEspacos}>                      </Text>
+
+                            <FormRow>
+
+                                <Text style={styles.textCadastro}>CPF: </Text>
+                                <TextInput
+                                    autoCorrect={false}
+                                    value={this.state.cpf}
+                                    onChangeText={(valueCPF) => this.onChangeCPF(valueCPF)}
+                                    style={styles.inputCidadeBairroLogradouro}
+                                ></TextInput>
+
+                            </FormRow>
+
+                            <Text style={styles.textEspacos}>                      </Text>
+
+                            <FormRow>
+
+                                <Text style={styles.textCadastro}>Telefone: </Text>
+                                <TextInput
+                                    autoCorrect={false}
+                                    value={this.state.telefone}
+                                    onChangeText={(valueTelefone) => this.onChangeTelefone(valueTelefone)}
+                                    style={styles.inputCidadeBairroLogradouro}
                                 ></TextInput>
 
                             </FormRow>
