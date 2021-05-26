@@ -4,12 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack'
 import  TelaLogin  from './src/pages/LoginPage'
 import CadastroForm from './src/pages/CadastroForm'
 import Home from './src/pages/HomePage';
-import BotaoAdicionar from './src/component/AdicionarButton'
-import BotaoPerfil from './src/component/PerfilButton';
-import LogoPetAdote from './src/component/HeaderLogo';
+import BotaoAdicionar from './src/component/botoes/AdicionarButton'
+import BotaoPerfil from './src/component/botoes/PerfilButton';
+import LogoPetAdote from './src/component/botoes/HeaderLogo';
 import PerfilUsuario from './src/pages/PerfilUsuario';
 import paginaAnuncio from './src/pages/detalhesAnuncio'
 import meuAccessToken from './src/services/AutenticarCliente'
+import ativarConta from './src/services/ativarConta';
+import AtivarContaPage from './src/pages/pageAtivarConta';
 
 function LoginPage() {
 
@@ -33,25 +35,29 @@ function App() {
 
     meuAccessToken()
     .then((result) =>{
+      console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
       console.log('MeuClientToken: ', result)
+      console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
       setToken(result);
     })
     .catch((error) =>{
+      console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
       console.log("Opa, temos um probleminha aqui: ", error)
+      console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
   })
 
   }, []);
 
-  console.log('-------------------------------------------------------------------------------');
+  console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
   console.log('MeuClientToken Antes do Retorno do JSX: ', token);
-  console.log('-------------------------------------------------------------------------------');
+  console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
 
     return(
 
       <NavigationContainer>
-        { console.log('---------------------------------------------------------------------------') }
-        { console.log('MeuClientToken no Retorno do JSX', token) }
-        { console.log('---------------------------------------------------------------------------') }
+        { console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------') }
+        { console.log('MeuClientToken no Retorno do JSX: ', token) }
+        { console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------') }
         <Stack.Navigator>
 
           <Stack.Screen
@@ -136,6 +142,18 @@ function App() {
                 headerStyle: {
                   backgroundColor: '#674ea7',
                 }
+
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="ativaConta"
+            component={ AtivarContaPage }
+            options =  {
+              {
+
+                headerShown: false,
 
               }
             }

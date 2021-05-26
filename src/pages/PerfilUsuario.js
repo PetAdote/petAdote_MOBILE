@@ -1,14 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native'
-import BarraMomentos from '../component/BarraMomentos'
-import FormRow from '../component/FormRow'
-import BotaoPesquisar from '../component/BotaoPesquisar'
-import CaixaDePostagem from '../component/CaixaDePostagem'
-import AnuncioMomentos from '../component/BarraAnunciosMomentos'
+import { StyleSheet, View, ScrollView} from 'react-native'
 import Banner from '../component/BannerUsuario'
-import BiosDetalhesUsuario from '../component/BiosEDetalhes'
-import PublicacoesAnimais from '../component/BarraPublicacoesAnimaisPerfilUsuario'
-import CaixaPublicacoes from '../component/CaixaPublicacoesPerfil'
+import BiosDetalhesUsuario from '../component/textos/BiosEDetalhes'
+import PublicacoesAnimais from '../component/caixasEbarras/BarraPublicacoesAnimaisPerfilUsuario'
+import CaixaPublicacoes from '../component/caixasEbarras/CaixaPublicacoesPerfil'
 
 export class PerfilUsuario extends React.Component {
 

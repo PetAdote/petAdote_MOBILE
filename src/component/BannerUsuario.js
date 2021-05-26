@@ -1,10 +1,8 @@
 import React from 'react'
-import { render } from 'react-dom'
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native'
-import FormRow from '../component/FormRow'
-import ImagemDoBanner from '../component/ImagemBanner'
-import FotoPerfil from '../component/FotoDePerfil'
-import BotaoSeguirUsuario from '../component/BotaoSeguirPerfil'
+import { StyleSheet, Text, View} from 'react-native'
+import ImagemDoBanner from '../component/imagens/ImagemBanner'
+import FotoPerfil from '../component/imagens/FotoDePerfil'
+import BotaoSeguirUsuario from '../component/botoes/BotaoSeguirPerfil'
 
 function Banner() {
 
@@ -27,7 +25,7 @@ function Banner() {
 
                 <View>
 
-                    <Text style={styles.NomePerfil}>PESSOAAAA</Text>
+                    <Text style={styles.NomePerfil}>Nome</Text>
 
                 </View>
 

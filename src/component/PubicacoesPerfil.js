@@ -1,6 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native'
-import FormRow from './FormRow'
+import { StyleSheet, View, Image, TouchableOpacity} from 'react-native'
 
 function PublicacoesDoPerfil() {
 

@@ -1,10 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native'
-import FotoPerfil from '../component/FotoDePerfil'
-import VotaoDeVoltar from '../component/botaoVoltar'
-import MenuDetalhesAnuncio from '../component/menuTresPontosDetalhesAnuncio'
-import BarraAzul from '../component/BarraAnimalIcones'
-import DescicaoDoAnimal from '../component/descricaoAnimal'
+import { StyleSheet, View } from 'react-native'
+import FotoPerfil from '../component/imagens/FotoDePerfil'
+import VotaoDeVoltar from '../component/botoes/botaoVoltar'
+import MenuDetalhesAnuncio from '../component/botoes/menuTresPontosDetalhesAnuncio'
+import BarraAzul from '../component/caixasEbarras/BarraAnimalIcones'
+import DescicaoDoAnimal from '../component/textos/descricaoAnimal'
+import NomeDoUsuario from '../component/textos/NomeUsuario'
+import ImagemDoAnimalDoAnuncio from '../component/imagens/ImagemAnimal'
+import BotaoPropor from '../component/botoes/ProporDetalhesAnuncio'
 
 export class paginaAnuncio extends React.Component {
 
@@ -23,7 +26,7 @@ export class paginaAnuncio extends React.Component {
 
                         <VotaoDeVoltar/>
                         <FotoPerfil/>
-                        <Text style={styles.nome}>Fulano</Text>
+                        <NomeDoUsuario/>
                         <MenuDetalhesAnuncio/>
 
                     </View>
@@ -34,15 +37,21 @@ export class paginaAnuncio extends React.Component {
 
                     </View>
 
-                    <View style={styles.ViewImagemAnimal}>
+                    <View>
 
-                        <Image source={require('../../assets/imagemPostagemX.png')} style={styles.imagemAnimal}/>
+                        <ImagemDoAnimalDoAnuncio/>
 
                     </View>
 
                     <View>
         
                         <DescicaoDoAnimal/>
+
+                    </View>
+
+                    <View>
+
+                        <BotaoPropor/>
 
                     </View>
 
@@ -65,10 +74,7 @@ const styles = StyleSheet.create({
         margin: 10,
         alignItems: 'center',
         bottom: 130,
-    },
-    nome: {
-        fontSize: 20,
-        marginLeft: 20,
+        width: 360,
     },
     barraAnimal: {
         flexDirection: 'row',
@@ -76,10 +82,6 @@ const styles = StyleSheet.create({
         marginRight: 10,
         alignItems: 'center',
         bottom: 260,
-    },
-    imagemAnimal: {
-        height: 580,
-        width: 580,
     },
     ViewImagemAnimal: {
         bottom: 260,

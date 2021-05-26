@@ -1,10 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Button, ScrollView} from 'react-native'
-import BarraMomentos from '../component/BarraMomentos'
-import FormRow from '../component/FormRow'
-import BotaoPesquisar from '../component/BotaoPesquisar'
-import CaixaDePostagem from '../component/CaixaDePostagem'
-import AnuncioMomentos from '../component/BarraAnunciosMomentos'
+import { StyleSheet, Text, View, ScrollView} from 'react-native'
+import BarraMomentos from '../component/caixasEbarras/BarraMomentos'
+import BotaoPesquisar from '../component/botoes/BotaoPesquisar'
+import CaixaDePostagem from '../component/caixasEbarras/CaixaDePostagem'
+import AnuncioMomentos from '../component/caixasEbarras/BarraAnunciosMomentos'
 
 export class Home extends React.Component {
 

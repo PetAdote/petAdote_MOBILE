@@ -1,15 +1,10 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, TextInput} from 'react-native'
+import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TouchableOpacity, ScrollView, TextInput, Alert } from 'react-native'
 import FormRow from '../component/FormRow'
 import * as ImagePicker from 'expo-image-picker'
 import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import axios from 'axios';
 import React from 'react';
-//import api from '../services/api'
-//import Autenticacao, { token } from '../component/AutenticarCliente';
-//import * as SecureStore from 'expo-secure-store';
-import AsyncStorage from "@react-native-community/async-storage";
 import meuAccessToken from "../services/AutenticarCliente"
-import meuClientToken from '../../App'
 
 export class CadastroForm extends React.Component {
 
@@ -20,7 +15,9 @@ export class CadastroForm extends React.Component {
             this.state.token = result
         })
         .catch((error) =>{
+            console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
             console.log("Opa, temos um probleminha aqui: ", error.response)
+            console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
         })
 
     }
@@ -95,24 +92,24 @@ export class CadastroForm extends React.Component {
         axios.post('http://179.213.88.128:3000/contas/', 
         {
 
-                email: this.state.emailUsuario,
-                senha: this.state.senhaUsuario,
-                confirma_senha: this.state.confirmarSenhaUsuario,
+            email: this.state.emailUsuario,
+            senha: this.state.senhaUsuario,
+            confirma_senha: this.state.confirmarSenhaUsuario,
 
-                primeiro_nome: this.state.nomeUsurario,
-                sobrenome: this.state.sobreNomeUsurario,
-                data_nascimento: this.state.dataDeNascimentoUsuario,
-                cpf: this.state.cpf,
-                telefone: this.state.telefone,
-                descricao: this.state.biosUsuario,
+            primeiro_nome: this.state.nomeUsurario,
+            sobrenome: this.state.sobreNomeUsurario,
+            data_nascimento: this.state.dataDeNascimentoUsuario,
+            cpf: this.state.cpf,
+            telefone: this.state.telefone,
+            descricao: this.state.biosUsuario,
 
-                cep: this.state.cepUsuario,
-                logradouro: this.state.logadouroUsuario,
-                numero: this.state.numeroUsuario,
-                bairro: this.state.bairroUsuario,
-                cidade: this.state.cidadeUsuario,
-                complemento: this.state.complementoUsuario,
-                uf: this.state.estadoUsuario,
+            cep: this.state.cepUsuario,
+            logradouro: this.state.logadouroUsuario,
+            numero: this.state.numeroUsuario,
+            bairro: this.state.bairroUsuario,
+            cidade: this.state.cidadeUsuario,
+            complemento: this.state.complementoUsuario,
+            uf: this.state.estadoUsuario,
 
         },
         {
@@ -122,10 +119,512 @@ export class CadastroForm extends React.Component {
         }
         })
         .then((successResult) => {
-            console.log(successResult.response);
+            console.log(successResult);
+
+            this.props.navigation.navigate('LoginPetAdote');
+
+            Alert.alert(
+                    'Usuário cadastrado com sucesso',
+                    "Checa o seu email já deve ter chegado lá o nosso código de ativação",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            
         })
-        .catch((errorResult) => {
-            console.error('Temos um problema ==>', errorResult.response);
+        .catch((error) => {
+            console.log('Temos um problema ==>', error.response);
+
+            if(error.response.data.code == "ACCESS_TO_RESOURCE_NOT_ALLOWED"){
+                Alert.alert(
+                    'ACCESS_TO_RESOURCE_NOT_ALLOWED',
+                    "Sei la que erro é esse mas preenche direito esse formulário aí",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INTERNAL_SERVER_API_ERROR"){
+                Alert.alert(
+                    'INTERNAL_SERVER_API_ERROR',
+                    "Erro interno da api, eu acho.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INTERNAL_SERVER_API_ERROR"){
+                Alert.alert(
+                    'INTERNAL_SERVER_API_ERROR',
+                    "Erro interno da api, eu acho.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INTERNAL_SERVER_ERROR"){
+                Alert.alert(
+                    'INTERNAL_SERVER_ERROR',
+                    "Deu pau do server.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INTERNAL_SERVER_MODULE_ERROR"){
+                Alert.alert(
+                    'INTERNAL_SERVER_MODULE_ERROR',
+                    "Torce pra que seja algo fácil de resolver por que se não fudeu.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "RESOURCE_NOT_FOUND"){
+                Alert.alert(
+                    'RESOURCE_NOT_FOUND',
+                    "Recurso não encontrado, não sei oque significa.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "ACCESS_NOT_ALLOWED"){
+                Alert.alert(
+                    'ACCESS_NOT_ALLOWED',
+                    "Acesso não permitid.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "ACCESS_NOT_ALLOWED"){
+                Alert.alert(
+                    'ACCESS_NOT_ALLOWED',
+                    "Acesso não permitid.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "EXPIRED_AUTH"){
+                Alert.alert(
+                    'EXPIRED_AUTH',
+                    "Acho que teu acesso expirou.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "BAD_REQUEST"){
+                Alert.alert(
+                    'BAD_REQUEST',
+                    "Você não digitou nada errado né?",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_INPUT"){
+                Alert.alert(
+                    'INVALID_INPUT',
+                    "Você não digitou nada errado né?",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_PARAM"){
+                Alert.alert(
+                    'INVALID_PARAM',
+                    "Tenta outra vez",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_REQUEST_QUERY"){
+                Alert.alert(
+                    'INVALID_REQUEST_QUERY',
+                    "Tenta outra vez",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_REQUEST_FIELDS"){
+                Alert.alert(
+                    'INVALID_REQUEST_FIELDS',
+                    "Tenta outra vez",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_EMAIL_LENGTH"){
+                Alert.alert(
+                    'O comprimento do email está invalido',
+                    "Ou tá muito curto ou ta muito longo, coloque um outro email.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_EMAIL_INPUT"){
+                Alert.alert(
+                    'A entrada do email está incorreta',
+                    "Tu tem certeza que esse email tá correto? acho que tem coisa faltando aí em.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "EMAIL_ALREADY_TAKEN"){
+                Alert.alert(
+                    'Esse email já ta sendo usado amigão',
+                    "Tenta colocar outro, ou talvez tu já tenha uma conta aqui e se esqueceu, tenta logar, quem sabe.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_PASSWORD_LENGTH"){
+                Alert.alert(
+                    'O tamanho da senha está inválido',
+                    "Ou tua senha é muito curta eu ela é muito longa pra ta mostrando esse erro.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+                
+            }
+
+            if(error.response.data.code == "PASSWORD_WITHOUT_NUMBER"){
+                Alert.alert(
+                    'Sua senha esta sem um número',
+                    "A senha precisa ter pelo menos um número.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "PASSWORD_WITHOUT_UPPERCASE_LETTER"){
+                Alert.alert(
+                    'A senha está sem um a letra maiúscola',
+                    "É necessário que sua senha tenha pelo menos uma letra em caixa alta.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "PASSWORD_WITHOUT_LOWERCASE_LETTERS"){
+                Alert.alert(
+                    'A senha está sem um a letra minuscola',
+                    "É necessário que sua senha tenha pelo menos uma letra em caixa baixa.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_PASSWORD_CONFIRMATION"){
+                Alert.alert(
+                    'A confirmação da senha deve estar incorreta',
+                    "Ambas as senhas digitadas precisam ser idênticas.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_PRIMEIRO_NOME_LENGTH"){
+                Alert.alert(
+                    'O tamanho do teu nome é invalido',
+                    "O primeiro nome não pode ser muito longo nem muito curto.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_PRIMEIRO_NOME_INPUT"){
+                Alert.alert(
+                    'O nome inserido não é valido',
+                    "Você ditou ele de alguma maneira estranha.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_SOBRENOME_LENGTH"){
+                Alert.alert(
+                    'O tamanho do sobrenome não é valido',
+                    "Ou ta muito grande ou ta muito pequeno.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_SOBRENOME_INPUT"){
+                Alert.alert(
+                    'O sobrenome não é valido',
+                    "Você digitou alguma coisa inválida aí.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_DATA_NASCIMENTO_LENGTH"){
+                Alert.alert(
+                    'O tamanho da data de nascimento não é valida',
+                    "Ou ta muito grande ou ta muito pequeno.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_DATA_NASCIMENTO_INPUT"){
+                Alert.alert(
+                    'O formato de incerção da data de nascimento está incorreta',
+                    "Coloca de novo, tem algo errado aí, o formato certo é ANO/MÊS/DIA.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_DATA_NASCIMENTO_FOR_LEAP_YEAR"){
+                Alert.alert(
+                    'Data de nascimento invalida para ano bissexto',
+                    "A data de nascimento esta incorreta para um ano bissexto.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_DATA_NASCIMENTO_FOR_COMMON_YEAR"){
+                Alert.alert(
+                    'Data de nascimento invalida para ano comum',
+                    "A data de nascimento esta incorreta para um ano comum.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "FORBIDDEN_USER_AGE"){
+                Alert.alert(
+                    'A idade do usuario parece estar errada',
+                    "Ou você ta muito velho ou ta muito novo, coloque uma idade válida.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_CPF_INPUT"){
+                Alert.alert(
+                    'O CPF inserido está incompleto ou em um formato incorreto',
+                    "por favor o insira da seguinte maneira 123.123.123-12 ou 12312312312",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "CPF_DIGITS_ARE_REPEATING"){
+                Alert.alert(
+                    'Digitos do CPF se repetem',
+                    "por favor o insira da seguinte maneira 123.123.123-12 ou 12312312312, não pode haver repetições",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "CPF_ALREADY_TAKEN"){
+                Alert.alert(
+                    'Esse CPF já está sendo usado',
+                    "Tem certeza que já não tem uma conta aqui? ou você digitou seu CPF errado.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_CPF"){
+                Alert.alert(
+                    'Esse CPF é invalido',
+                    "Digite um CPF válido.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_TELEFONE_INPUT"){
+                Alert.alert(
+                    'Você inseriu o telefone de maneira errada',
+                    "O ensira de maneira correta.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_TELEFONE_INPUT"){
+                Alert.alert(
+                    'Você inseriu o telefone de maneira errada',
+                    "O ensira de maneira correta.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "TELEFONE_DIGITS_ARE_REPEATING"){
+                Alert.alert(
+                    'Os digitos do telefone se repetem',
+                    "O ensira de maneira correta.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_TELEFONE_DDD"){
+                Alert.alert(
+                    'O DDD está errado',
+                    "O ensira de maneira correta.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_CEP_INPUT"){
+                Alert.alert(
+                    'O CEP está errado',
+                    "O ensira de maneira correta.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "CEP_NOT_FOUND"){
+                Alert.alert(
+                    'O CEP não foi encontrado',
+                    "Ensira um CEP válido.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_LOGRADOURO_LENGTH"){
+                Alert.alert(
+                    'O tamanho do nome do logradouro está incorreto',
+                    "Ou ta muito grande ou ta muito pequeno esse nome aí.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_BAIRRO_LENGTH"){
+                Alert.alert(
+                    'O tamanho do nome do bairro está incorreto',
+                    "Ou ta muito grande ou ta muito pequeno esse nome aí.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_CIDADE_LENGTH"){
+                Alert.alert(
+                    'O tamanho do nome da cidade está incorreto',
+                    "Ou ta muito grande ou ta muito pequeno esse nome aí.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "CIDADE_DONT_BELONG_TO_CEP"){
+                Alert.alert(
+                    'Esta cidade não pertence a este CEP',
+                    "Ensira o CEP novamente você deve ter errado ele.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_DESCRICAO_LENGTH"){
+                Alert.alert(
+                    'O tamanho da descrição está invalido',
+                    "Ou ta muito curto ou ta muito longo.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_REQUEST_CONTENT"){
+                Alert.alert(
+                    'INVALID_REQUEST_CONTENT',
+                    "Os conteúdos desta request são inválidos.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "TOKEN_NOT_FOUND"){
+                Alert.alert(
+                    'TOKEN_NOT_FOUND',
+                    "Token de acesso não encontrado.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "USER_HAS_ACTIVE_TOKEN"){
+                Alert.alert(
+                    'USER_HAS_ACTIVE_TOKEN',
+                    "O usuário já possuí um token ativado.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
         });
 
     }

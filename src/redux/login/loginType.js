@@ -1,0 +1,1 @@
+export const ATIVAR_CONTA = 'ATIVAR_CONTA';
