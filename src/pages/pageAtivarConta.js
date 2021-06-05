@@ -1,48 +1,85 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image } from 'react-native'
-import loginReducer from '../redux/login/loginReducer'
-import store from '../redux/store'
+import { getTokensSave } from '../utils/storeInactiveTokens'
+import { useNavigation } from '@react-navigation/native'; 
 
-export class AtivarContaPage extends React.Component {
+export function AtivarContaPage(){
 
-    constructor(props){
-        super(props)
-            this.state = {
+    const navigation = useNavigation();
 
-                emailToken: '',
+    useEffect(() => {
+        async function getToken() {
+            const result = await getTokensSave('userInactiveToken');
+            setToken(result)
+        }
 
-            }
+        getToken();
+    }, [])
 
-    }
+    const [token, setToken] = useState([]);
+    const [emailToken, setEmailToken] = useState('');
 
-    enviarToken(){
+    function enviarToken(){
 
-        console.log("O TOKEN É ESSE ==> ", store.getState(loginReducer(resposta.inactiveUser_accessToken)))
+        console.log("=============================================================================================================================================")
 
-        axios.patch('http://179.213.88.128:3000/contas/ativacao/' + this.state.emailToken,
+        console.log("O TOKEN É ESSE => ", token) 
+
+        axios.patch('http://179.213.88.128:3000/contas/ativacao/' + emailToken,
             {
 
             },
             {
                 headers : {
-                  'Authorization': `Bearer ${store.getState(loginReducer(resposta.inactiveUser_accessToken))}`
+                  'Authorization': `Bearer ${token}`
                 }
             }
         )
         .then((response) =>{
             console.log(response);
+
+            if(response.data.mensagem == 'Ativação da conta do usuário efetuada com sucesso.'){
+                Alert.alert(
+                'Conta ativada com sucesso!',
+                "Parabéns, agora su conta foi ativada, viva!",
+                [
+                    { text: "SIM", onPress: () => navigation.navigate('HomePage')},
+                    { text: "NÃO", onPress: () => console.log("NÃO Pressed") }
+    
+                ]
+                );   
+            }
           })
           .catch((error) => {
             console.log("Temos um problema ==>", error.response);
+
+            if(response.data.code == 'TOKEN_NOT_FOUND'){
+                Alert.alert(
+                'Nenhum token de ativação foi solicitado para esta conta',
+                "Essa conta de usuario não posui uma solicitação de ativação!",
+                [
+                    { text: "SIM", onPress: () => console.log("SIM Pressed")},
+                    { text: "NÃO", onPress: () => console.log("NÃO Pressed") }
+    
+                ]
+                );   
+            }
+            
+            if(response.data.code == 'ACCESS_NOT_ALLOWED'){
+                Alert.alert(
+                'Acesso negado',
+                "Você não está autorizado para utilizar esta chamada!",
+                [
+                    { text: "SIM", onPress: () => console.log("SIM Pressed") },
+                    { text: "NÃO", onPress: () => console.log("NÃO Pressed") }
+                ]
+                );   
+
+            }
+
           })
     }
-
-    onChangeEmailToken(emailToken){
-        this.setState({ emailToken });
-    }
-
-    render() {
 
         return (
 
@@ -63,13 +100,13 @@ export class AtivarContaPage extends React.Component {
 
                 <TextInput
                     style={styles.input}
-                    value={this.state.emailToken}
-                    onChangeText={(valueEmailToken) => this.onChangeEmailToken(valueEmailToken)}
+                    value={emailToken}
+                    onChangeText={(emailToken) => setEmailToken(emailToken)}
                 />
 
                 <Text>                    </Text>
 
-                <TouchableOpacity style={styles.confirmarBotao} onPress={() => {this.enviarToken();}}>
+                <TouchableOpacity style={styles.confirmarBotao} onPress={() => {enviarToken();}}>
 
                     <Text style={styles.textConfirmarBotao}>Confirmar</Text>
 
@@ -78,8 +115,6 @@ export class AtivarContaPage extends React.Component {
             </View>
             
         )
-
-    }
     
 }
 

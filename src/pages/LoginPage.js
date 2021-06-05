@@ -1,63 +1,128 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, TouchableOpacity, Alert} from 'react-native';
 import FormRow from '../component/FormRow.js';
 import meuAccessToken from "../services/AutenticarCliente";
 import axios from 'axios';
-import store from '../redux/store'
 import { ativarConta } from '../redux/login/loginAction.js';
-import { ATIVAR_CONTA } from '../redux/login/loginType.js';
+import { useNavigation } from '@react-navigation/native';
+import { saveToken } from '../utils/storeInactiveTokens'
+import { saveRefreshToken } from '../utils/storeInactiveTokens'
+import { saveUserToken } from '../utils/storeUserToken'
+import { saveUserRefreshToken } from '../utils/storeUserToken'
 
-export class TelaLogin extends React.Component {
+export function TelaLogin(){
 
-  componentDidMount(){
-    
+  const navigation = useNavigation();
+
+  useEffect(() => {
+        
     meuAccessToken()
     .then((result) => {
-        this.state.token = result
+        setToken(result)
     })
     .catch((error) =>{
         console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
         console.log("Opa, temos um probleminha aqui: ", error.response)
         console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
     })
+  }, [])
 
-}
+  const [token, setToken] = useState('');
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [resposta, setResposta] = useState(JSON);
 
-  //Criar props para ligar para próxima tela.
-  constructor(props){
-    super(props)
+  function entrarNaConta(){
 
-    this.state ={
+    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
+    console.log('TOKEN ENVIADO COM SUCESSO ==>', token)
+    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
-      email: '',
-      senha: '',
+    axios.post('http://179.213.88.128:3000/autenticacoes/usuarios/login', 
+    {
 
-      token: '',
-      resposta: JSON,
+      email: email,
+      senha: senha,
 
+    },
+    {
+
+    headers : {
+        'Authorization': `Bearer ${token}`
     }
+    })
+    .then((response) => {
+        console.log(response);
+
+        setResposta(response.data)
+
+        if(resposta.inactiveUser_accessToken) {
+          saveToken('userInactiveToken', resposta.inactiveUser_accessToken)
+          saveRefreshToken('userInactiveRefreshToken', resposta.inactiveUser_refreshToken)
+        } 
+
+        navigation.navigate('HomePage');
+
+        if(response.data.exemplo_ativacao){
+          Alert.alert(
+            'Sua conta ainda não foi ativada',
+            "Deseja ativa-la agora? se não a ativar só poderar ver as coisas aqui, não podera interagir com nada!",
+            [
+                { text: "SIM", onPress: () => sim() },
+                { text: "NÃO", onPress: () => console.log("NÃO Pressed") }
+
+            ]
+          );       
+        } else {
+          
+          console.log("Este usuario já confirmou sua conta")
+
+          if(resposta.user_accessToken) {
+            saveUserToken('userToken', resposta.user_accessToken)
+            saveUserRefreshToken('userRefreshToken', resposta.user_refreshToken)
+          }  
+
+        }
+
+      })
+    .catch((error) => {
+        console.log('Temos um problema ==>', error.response);
+
+        if(error.response.data.code == "INVALID_USER_CREDENTIALS"){
+          Alert.alert(
+              'Os dados inseridos são inválidos!',
+              "Ensira os dados validos nos campos para acessar sua conta!",
+              [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+              ]
+          );
+      }
+
+      if(error.response.data.code == "ACCESS_NOT_ALLOWED"){
+        Alert.alert(
+            'Requisição não autorizada.',
+            "Essa requisição não foi autorizada.",
+            [
+                { text: "OK", onPress: () => console.log("OK Pressed") }
+            ]
+        );
+        
+      }
+
+      });
   }
 
-  onChangeEmail(email) {
-    this.setState({ email });
-  }
+  function sim(){
 
-  onChangeSenha(senha) {
-    this.setState({ senha });
-  }
+    navigation.navigate('ativaConta')
 
-  sim(){
-    this.props.navigation.navigate('ativaConta')
-
-    store.dispatch(ativarConta(this.state.resposta))
-
-    axios.post('http://179.213.88.128:3000/contas/ativacao/reenvio/' + this.state.resposta.cod_usuario,
+    axios.post('http://179.213.88.128:3000/contas/ativacao/reenvio/' + resposta.cod_usuario,
       {
 
       },
       {
         headers : {
-          'Authorization': `Bearer ${this.state.resposta.inactiveUser_accessToken}`
+          'Authorization': `Bearer ${resposta.inactiveUser_accessToken}`
         }
       }
     )
@@ -90,80 +155,6 @@ export class TelaLogin extends React.Component {
 
   }
 
-  entrarNaConta(){
-
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-    console.log('TOKEN ENVIADO COM SUCESSO ==>', this.state.token)
-    console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-
-    axios.post('http://179.213.88.128:3000/autenticacoes/usuarios/login', 
-    {
-
-      email: this.state.email,
-      senha: this.state.senha,
-
-    },
-    {
-
-    headers : {
-        'Authorization': `Bearer ${this.state.token}`
-    }
-    })
-    .then((response) => {
-        console.log(response);
-
-        this.props.navigation.navigate('HomePage');
-
-        console.log("Resposta do exemplo ==> ", response.data.exemplo_ativacao)
-
-        this.state.resposta = response.data
-
-        if(response.data.exemplo_ativacao){
-          Alert.alert(
-            'Sua conta ainda não foi ativada',
-            "Deseja ativa-la agora? se não a ativar só poderar ver as coisas aqui, não podera interagir com nada!",
-            [
-                { text: "SIM", onPress: () => this.sim() },
-                { text: "NÃO", onPress: () => console.log("NÃO Pressed") }
-
-            ]
-          );       
-        } else {
-          
-          console.log("Este usuario já confirmou sua conta")
-
-        }
-
-      })
-    .catch((error) => {
-        console.log('Temos um problema ==>', error.response);
-
-        if(error.response.data.code == "INVALID_USER_CREDENTIALS"){
-          Alert.alert(
-              'Os dados inseridos são inválidos!',
-              "Ensira os dados validos nos campos para acessar sua conta!",
-              [
-                  { text: "OK", onPress: () => console.log("OK Pressed") }
-              ]
-          );
-      }
-
-      if(error.response.data.code == "ACCESS_NOT_ALLOWED"){
-        Alert.alert(
-            'Requisição não autorizada.',
-            "Essa requisição não foi autorizada.",
-            [
-                { text: "OK", onPress: () => console.log("OK Pressed") }
-            ]
-        );
-        
-      }
-
-      });
-  }
-
-    render() {
-        
       return (
 
         <View style={styles.background}>
@@ -188,8 +179,8 @@ export class TelaLogin extends React.Component {
                 <Text style={styles.textLogin}>Email</Text>
                 <TextInput placeholder="Digite aqui"
                   autoCorrect={false}
-                  value={this.state.email}
-                  onChangeText={(valueEmail) => this.onChangeEmail(valueEmail)}
+                  value={email}
+                  onChangeText={(email) => setEmail(email)}
                   style={styles.inputEmail}
                 ></TextInput>
 
@@ -202,8 +193,8 @@ export class TelaLogin extends React.Component {
                 <Text style={styles.textLogin}>Senha</Text>
                 <TextInput placeholder="Digite aqui"
                   autoCorrect={false}
-                  value={this.state.senha}
-                  onChangeText={(valueSenha) => this.onChangeSenha(valueSenha)}
+                  value={senha}
+                  onChangeText={(senha) => setSenha(senha)}
                   style={styles.inputSenha}
                   secureTextEntry={true}
                 ></TextInput>
@@ -220,14 +211,14 @@ export class TelaLogin extends React.Component {
 
               <View>
                 <TouchableOpacity style={styles.btnSubmit}>
-                  <Text style={styles.submitTextAcessar}  onPress={() => {this.entrarNaConta();}}>Acessar      <Image source={require('../../assets/entrar.png')}/></Text>
+                  <Text style={styles.submitTextAcessar}  onPress={() => {entrarNaConta();}}>Acessar      <Image source={require('../../assets/entrar.png')}/></Text>
                 </TouchableOpacity>
               </View>
 
             <Text>                      </Text>
 
               <View>
-                <TouchableOpacity style={styles.btnCriar} onPress={() => {this.props.navigation.navigate('CadastroPetAdote');}}>
+                <TouchableOpacity style={styles.btnCriar} onPress={() => {navigation.navigate('CadastroPetAdote');}}>
                   <Text style={styles.submitCriar}>Não tem conta?</Text>
                   <Text style={styles.submitCriar}>Crie uma aqui!</Text>
                 </TouchableOpacity>
@@ -254,7 +245,6 @@ export class TelaLogin extends React.Component {
 
         </View>
     )
-  }
 }
 
 const styles = StyleSheet.create({ 
