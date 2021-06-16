@@ -1,28 +1,29 @@
 import React from 'react'
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 
 function BotaoAdicionar() {
 
-  
+    const navigation = useNavigation();
+
 
         return (
 
+                <View style={styles.AlinharBotaoEsquerdo}>
 
-            <View style={styles.AlinharBotaoEsquerdo}>
+                    <TouchableOpacity style={styles.BotaoMais} onPress={() => {navigation.navigate('menuAdicionar');}}>
 
-                <TouchableOpacity style={styles.BotaoMais}>
+                        <Text style={styles.Mais}> + </Text>
+                        <Text style={styles.AjustarLinha}> </Text>
 
-                    <Text style={styles.Mais}> + </Text>
-                    <Text style={styles.AjustarLinha}> </Text>
-                    
-                </TouchableOpacity>
+                    </TouchableOpacity>
 
-            </View>
-            
+                </View>
             
         )
     
 }
+
 
 const styles = StyleSheet.create({
 
@@ -48,6 +49,10 @@ const styles = StyleSheet.create({
     },
     AjustarLinha: {
         fontSize: 4,
+    },
+    button: {
+        backgroundColor: '#b4a7d6',
+        fontSize: 10, 
     },
 })
 

@@ -12,7 +12,7 @@ function BotaoPerfil() {
 
             <View style={styles.AlinharBotaoEsquerdo}>
 
-                <TouchableOpacity style={styles.BotaoMais} onPress={() => {navigation.navigate('PerfilDoUsuario');}}>
+                <TouchableOpacity style={styles.BotaoMais} onPress={() => {navigation.navigate('menuPaginas');}}>
 
                     <FotoPerfil style={styles.PerfilVetor}/>
                     

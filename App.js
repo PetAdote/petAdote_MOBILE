@@ -10,8 +10,18 @@ import LogoPetAdote from './src/component/botoes/HeaderLogo';
 import PerfilUsuario from './src/pages/PerfilUsuario';
 import paginaAnuncio from './src/pages/detalhesAnuncio'
 import meuAccessToken from './src/services/AutenticarCliente'
-import ativarConta from './src/services/ativarConta';
 import AtivarContaPage from './src/pages/pageAtivarConta';
+import PublicarPostagem from './src/pages/pubicarPostagemPage';
+import BotaoHome from './src/component/botoes/botaoHome'
+import NomeELogo from './src/component/botoes/nomeTopoLateralEsquerdoPostagem'
+import MenuAdicionar from './src/pages/menuAdicionar'
+import VotaoDeVoltar from './src/component/botoes/botaoVoltarHeader'
+import MenuPaginas from './src/pages/menuPaginas'
+import CadastroAnimal from './src/pages/CadastrarAnimal'
+import PublicarAnuncio from './src/pages/FazerAnuncio'
+import SelecionarAnimal from './src/pages/pageSelectAnimal'
+import Recuperacao from './src/pages/PageEsqueciASenha'
+import RecuperacaoPage2 from './src/pages/PageEsqueciASenha2'
 
 function LoginPage() {
 
@@ -23,11 +33,15 @@ function LoginPage() {
   
 }
 
+
 const Stack = createStackNavigator()
 
 //export const meuClientToken = meuAccessToken();
 
 function App() {
+
+  LoginPage();
+
 
   const [token, setToken] = useState({});
 
@@ -94,8 +108,8 @@ function App() {
               {
 
                 headerShown: true,
-                title: <LogoPetAdote/>,
-                headerLeft : BotaoAdicionar,
+                title: <LogoPetAdote />,
+                headerLeft : () => (<BotaoAdicionar/>),
                 headerRight: () => (<BotaoPerfil/>),
                 headerBackTitle: LogoPetAdote,
                 headerTitleAlign: 'center',
@@ -115,7 +129,7 @@ function App() {
 
                 headerShown: true,
                 title: <LogoPetAdote/>,
-                headerLeft : BotaoAdicionar,
+                headerLeft : () => (<BotaoAdicionar/>),
                 headerRight: BotaoPerfil,
                 headerBackTitle: LogoPetAdote,
                 headerTitleAlign: 'center',
@@ -135,7 +149,7 @@ function App() {
 
                 headerShown: true,
                 title: <LogoPetAdote/>,
-                headerLeft : BotaoAdicionar,
+                headerLeft : () => (<BotaoAdicionar/>),
                 headerRight: BotaoPerfil,
                 headerBackTitle: LogoPetAdote,
                 headerTitleAlign: 'center',
@@ -155,6 +169,152 @@ function App() {
 
                 headerShown: false,
 
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="publicarPostagem"
+            component={ PublicarPostagem }
+            options =  {
+              {
+
+                headerShown: true,
+                title: <BotaoHome/>,
+                headerLeft : NomeELogo,
+                headerRight: BotaoPerfil,
+                headerBackTitle: LogoPetAdote,
+                headerTitleAlign: 'center',
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
+
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="menuAdicionar"
+            component={ MenuAdicionar }
+            options =  {
+              {
+
+                headerShown: true,
+                headerLeft : VotaoDeVoltar,
+                headerTitleStyle: {
+                  color: '#674ea7',
+                },
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="menuPaginas"
+            component={ MenuPaginas }
+            options =  {
+              {
+
+                headerShown: true,
+                headerLeft : VotaoDeVoltar,
+                headerTitleStyle: {
+                  color: '#674ea7',
+                },
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="CadastroAnimal"
+            component={ CadastroAnimal }
+            options =  {
+              {
+
+                headerShown: true,
+                headerLeft : VotaoDeVoltar,
+                headerTitleStyle: {
+                  color: '#674ea7',
+                },
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="PublicarAnuncioAnimal"
+            component={ PublicarAnuncio }
+            options =  {
+              {
+
+                headerShown: true,
+                headerLeft : VotaoDeVoltar,
+                headerTitleStyle: {
+                  color: '#674ea7',
+                },
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="selecioneOAnimal"
+            component={ SelecionarAnimal }
+            options =  {
+              {
+
+                headerShown: true,
+                headerLeft : VotaoDeVoltar,
+                headerTitleStyle: {
+                  color: '#674ea7',
+                },
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="RecuperarSenha"
+            component={ Recuperacao }
+            options =  {
+              {
+
+                headerShown: true,
+                headerLeft : VotaoDeVoltar,
+                headerTitleStyle: {
+                  color: '#674ea7',
+                },
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="RecuperarSenha2"
+            component={ RecuperacaoPage2 }
+            options =  {
+              {
+
+                headerShown: true,
+                headerLeft : VotaoDeVoltar,
+                headerTitleStyle: {
+                  color: '#674ea7',
+                },
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
               }
             }
           />

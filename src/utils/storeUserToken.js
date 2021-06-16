@@ -10,11 +10,11 @@ export async function getUserTokensSave(key) {
 
 export async function saveUserToken(key, newUserToken) {
 
-    await AsyncStorage.removeItem('userToken');
+    //await AsyncStorage.clear().then((response) => console.log(response))
 
     await AsyncStorage.setItem(key, JSON.stringify(newUserToken))
 
-    console.log("USER TOKEN SALVO COM SUCESSO")
+    console.log("USER TOKEN SALVO COM SUCESSO", newUserToken)
 }
 
 export async function getUserRefreshTokensSave(key) {
@@ -27,9 +27,9 @@ export async function getUserRefreshTokensSave(key) {
 
 export async function saveUserRefreshToken(key, newUserRefreshToken) {
 
-    await AsyncStorage.removeItem('userRefreshToken');
+    //await AsyncStorage.clear().then((response) => console.log(response))
 
     await AsyncStorage.setItem(key, JSON.stringify(newUserRefreshToken))
 
-    console.log("USER REFRESH TOKEN SALVO COM SUCESSO")
+    console.log("USER REFRESH TOKEN SALVO COM SUCESSO", newUserRefreshToken)
 }

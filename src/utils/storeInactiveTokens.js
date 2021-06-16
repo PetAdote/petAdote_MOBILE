@@ -14,7 +14,8 @@ export async function getTokensSave(key) {
 export async function saveToken(key, newToken) {
 
     //Limpa todos os tokens velhos.
-    await AsyncStorage.removeItem('userInactiveToken');
+    //await AsyncStorage.removeItem('userInactiveToken');
+    //await AsyncStorage.clear().then((response) => console.log(response))
 
     //Insere um novo token
     await AsyncStorage.setItem(key, JSON.stringify(newToken))
@@ -33,7 +34,8 @@ export async function getRefreshTokensSave(key) {
 
 export async function saveRefreshToken(key, newRefreshToken) {
 
-    await AsyncStorage.removeItem('userInactiveRefreshToken');
+    //await AsyncStorage.removeItem('userInactiveRefreshToken');
+    //await AsyncStorage.clear().then((response) => console.log(response))
 
     await AsyncStorage.setItem(key, JSON.stringify(newRefreshToken))
 

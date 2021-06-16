@@ -409,7 +409,7 @@ export class CadastroForm extends React.Component {
             if(error.response.data.code == "INVALID_DATA_NASCIMENTO_INPUT"){
                 Alert.alert(
                     'O formato de incerção da data de nascimento está incorreta',
-                    "Coloca de novo, tem algo errado aí, o formato certo é ANO/MÊS/DIA.",
+                    "Coloca de novo, tem algo errado aí, o formato certo é ANO-MÊS-DIA, quando for digitar não use barras use traços, exemplo: aaaa-mm-dd",
                     [
                         { text: "OK", onPress: () => console.log("OK Pressed") }
                     ]

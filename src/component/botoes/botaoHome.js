@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native'
 
-function LogoPetAdote() {
+function BotaoHome() {
 
   
 
@@ -12,7 +12,7 @@ function LogoPetAdote() {
 
                 <TouchableOpacity style={styles.BotaoMais}>
 
-                    <Image source={require('../../../assets/logo.png')} style={styles.PerfilVetor}/>
+                    <Image source={require('../../../assets/home.png')} style={styles.PerfilVetor}/>
                     <Text style={styles.AjustarLinha}> </Text>
                     
                 </TouchableOpacity>
@@ -27,7 +27,6 @@ function LogoPetAdote() {
 const styles = StyleSheet.create({
 
     BotaoMais:{
-        //backgroundColor: '#b4a7d6',
         borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
@@ -42,7 +41,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     AlinharBotaoEsquerdo: {
-        //marginLeft: 30,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -55,4 +53,4 @@ const styles = StyleSheet.create({
     },
 })
 
-export default LogoPetAdote
+export default BotaoHome

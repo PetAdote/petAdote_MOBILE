@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Alert } fro
 import { getTokensSave } from '../utils/storeInactiveTokens'
 import { useNavigation } from '@react-navigation/native'; 
 
-export function AtivarContaPage(){
+export function Recuperacao(){
 
     const navigation = useNavigation();
 
@@ -18,18 +18,18 @@ export function AtivarContaPage(){
     }, [])
 
     const [token, setToken] = useState('');
-    const [emailToken, setEmailToken] = useState('');
+    const [emailUsuario, setEmailUsuario] = useState('');
     const [resposta, setResposta] = useState(JSON);
 
-    function enviarToken(){
+    function enviarEmail(){
 
         console.log("=============================================================================================================================================")
 
         console.log("O TOKEN É ESSE => ", token) 
 
-        axios.patch('http://179.213.88.128:3000/contas/ativacao/' + emailToken,
+        axios.post('http://179.213.88.128:3000/contas/recuperacao',
             {
-
+                email: emailUsuario,
             },
             {
                 headers : {
@@ -41,13 +41,13 @@ export function AtivarContaPage(){
             setResposta(response)
             console.log(response);
 
-            navigation.navigate('HomePage')
+            navigation.navigate('RecuperarSenha2')
 
                 Alert.alert(
-                'Conta ativada com sucesso!',
-                "Parabéns, agora su conta foi ativada, viva!",
+                'Código de recuperação enviado para seu email!',
+                "Tem um código lá no seu email, vai lá pega ele e digita nesse campo branco aqui!",
                 [
-                    { text: "SIM", onPress: () => console.log("SIM Pressed")},
+                    { text: "Ok", onPress: () => console.log("SIM Pressed")},
     
                 ]
                 );   
@@ -56,6 +56,7 @@ export function AtivarContaPage(){
           .catch((error) => {
             console.log("Temos um problema ==>", error);
 
+            /*
             if(error.data.code == 'TOKEN_NOT_FOUND'){
                 Alert.alert(
                 'Nenhum token de ativação foi solicitado para esta conta',
@@ -79,8 +80,10 @@ export function AtivarContaPage(){
                 );   
 
             }
+          */
 
           })
+
     }
 
         return (
@@ -94,21 +97,20 @@ export function AtivarContaPage(){
                 <Text>                    </Text>
                 <Text>                    </Text>
 
-
-                <Text style={styles.textTexto}>Ensira abaixo o código que te enviamos</Text>
-                <Text style={styles.textTexto}>pelo email que você cadastrou.</Text>
+                <Text style={styles.textTexto}>Ensira abaixo o seu Email</Text>
+                <Text style={styles.textTexto}>para a recuperação.</Text>
 
                 <Text>                    </Text>
 
                 <TextInput
                     style={styles.input}
-                    value={emailToken}
-                    onChangeText={(emailToken) => setEmailToken(emailToken)}
+                    value={emailUsuario}
+                    onChangeText={(emailUsuario) => setEmailUsuario(emailUsuario)}
                 />
 
                 <Text>                    </Text>
 
-                <TouchableOpacity style={styles.confirmarBotao} onPress={() => {enviarToken();}}>
+                <TouchableOpacity style={styles.confirmarBotao} onPress={() => {enviarEmail();}}>
 
                     <Text style={styles.textConfirmarBotao}>Confirmar</Text>
 
@@ -155,4 +157,4 @@ textTexto: {
 }
 })
 
-export default AtivarContaPage
+export default Recuperacao

@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Alert } fro
 import { getTokensSave } from '../utils/storeInactiveTokens'
 import { useNavigation } from '@react-navigation/native'; 
 
-export function AtivarContaPage(){
+export function RecuperacaoPage2(){
 
     const navigation = useNavigation();
 
@@ -18,18 +18,20 @@ export function AtivarContaPage(){
     }, [])
 
     const [token, setToken] = useState('');
-    const [emailToken, setEmailToken] = useState('');
+    const [tokenEmail, setTokenEmail] = useState('');
+    const [emailUsuario, setEmailUsuario] = useState('');
     const [resposta, setResposta] = useState(JSON);
 
-    function enviarToken(){
+    function enviarEmail(){
 
         console.log("=============================================================================================================================================")
 
         console.log("O TOKEN É ESSE => ", token) 
 
-        axios.patch('http://179.213.88.128:3000/contas/ativacao/' + emailToken,
+        axios.patch('http://179.213.88.128:3000/contas/recuperacao/',
             {
-
+                email: emailUsuario,
+                tokenRecuperacao: tokenEmail,
             },
             {
                 headers : {
@@ -41,13 +43,13 @@ export function AtivarContaPage(){
             setResposta(response)
             console.log(response);
 
-            navigation.navigate('HomePage')
+            navigation.navigate('LoginPetAdote')
 
                 Alert.alert(
-                'Conta ativada com sucesso!',
-                "Parabéns, agora su conta foi ativada, viva!",
+                'Pronto!',
+                "Uma nova senha foi enviada para o email informado, use ela para entrar e colocar outra senha do seu gosto.",
                 [
-                    { text: "SIM", onPress: () => console.log("SIM Pressed")},
+                    { text: "Ok", onPress: () => console.log("SIM Pressed")},
     
                 ]
                 );   
@@ -56,6 +58,7 @@ export function AtivarContaPage(){
           .catch((error) => {
             console.log("Temos um problema ==>", error);
 
+            /*
             if(error.data.code == 'TOKEN_NOT_FOUND'){
                 Alert.alert(
                 'Nenhum token de ativação foi solicitado para esta conta',
@@ -79,8 +82,10 @@ export function AtivarContaPage(){
                 );   
 
             }
+          */
 
           })
+
     }
 
         return (
@@ -94,21 +99,33 @@ export function AtivarContaPage(){
                 <Text>                    </Text>
                 <Text>                    </Text>
 
-
-                <Text style={styles.textTexto}>Ensira abaixo o código que te enviamos</Text>
-                <Text style={styles.textTexto}>pelo email que você cadastrou.</Text>
+                <Text style={styles.textTexto}>Ensira abaixo o código de recuperação</Text>
+                <Text style={styles.textTexto}>que foi enviado para o seu email e o email</Text>
+                <Text style={styles.textTexto}>em que deseja receber sua nova senha temporaria.</Text>
 
                 <Text>                    </Text>
 
                 <TextInput
                     style={styles.input}
-                    value={emailToken}
-                    onChangeText={(emailToken) => setEmailToken(emailToken)}
+                    value={emailUsuario}
+                    placeholder={"O email aqui!"}
+                    onChangeText={(emailUsuario) => setEmailUsuario(emailUsuario)}
                 />
 
                 <Text>                    </Text>
 
-                <TouchableOpacity style={styles.confirmarBotao} onPress={() => {enviarToken();}}>
+                <Text>                    </Text>
+
+                <TextInput
+                    style={styles.input}
+                    value={tokenEmail}
+                    placeholder={"O código aqui!"}
+                    onChangeText={(tokenEmail) => setTokenEmail(tokenEmail)}
+                />
+
+                <Text>                    </Text>
+
+                <TouchableOpacity style={styles.confirmarBotao} onPress={() => {enviarEmail();}}>
 
                     <Text style={styles.textConfirmarBotao}>Confirmar</Text>
 
@@ -155,4 +172,4 @@ textTexto: {
 }
 })
 
-export default AtivarContaPage
+export default RecuperacaoPage2

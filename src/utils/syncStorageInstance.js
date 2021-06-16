@@ -1,7 +1,11 @@
-//import axios from "axios";
-import axios from 'axios';
+/*
+import SyncStorage from 'sync-storage';
 
-let meuAccessToken = async () => {
+let meuSyncStorage = async () => {
+
+
+
+        syncStorage();
 
     const accessToken = await axios.get('http://179.213.88.128:3000/autenticacoes/apis/login?cliente=2&senha=petMobile')
         .then((response) => {
@@ -21,3 +25,4 @@ let meuAccessToken = async () => {
 }
 
 export default meuAccessToken;
+*/

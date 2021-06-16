@@ -3,12 +3,12 @@ import { StyleSheet, Text, View, KeyboardAvoidingView, Image, TextInput, Touchab
 import FormRow from '../component/FormRow.js';
 import meuAccessToken from "../services/AutenticarCliente";
 import axios from 'axios';
-import { ativarConta } from '../redux/login/loginAction.js';
 import { useNavigation } from '@react-navigation/native';
 import { saveToken } from '../utils/storeInactiveTokens'
 import { saveRefreshToken } from '../utils/storeInactiveTokens'
 import { saveUserToken } from '../utils/storeUserToken'
 import { saveUserRefreshToken } from '../utils/storeUserToken'
+import { saveRespostaApi } from '../utils/storeRespostaApiLogin'
 
 export function TelaLogin(){
 
@@ -56,14 +56,15 @@ export function TelaLogin(){
 
         setResposta(response.data)
 
-        if(resposta.inactiveUser_accessToken) {
-          saveToken('userInactiveToken', resposta.inactiveUser_accessToken)
-          saveRefreshToken('userInactiveRefreshToken', resposta.inactiveUser_refreshToken)
-        } 
+        saveRespostaApi('RespostaApi', response.data);
 
         navigation.navigate('HomePage');
 
         if(response.data.exemplo_ativacao){
+
+          saveToken('userInactiveToken', response.data.inactiveUser_accessToken)
+          saveRefreshToken('userInactiveRefreshToken', response.data.inactiveUser_refreshToken)
+
           Alert.alert(
             'Sua conta ainda não foi ativada',
             "Deseja ativa-la agora? se não a ativar só poderar ver as coisas aqui, não podera interagir com nada!",
@@ -77,10 +78,8 @@ export function TelaLogin(){
           
           console.log("Este usuario já confirmou sua conta")
 
-          if(resposta.user_accessToken) {
-            saveUserToken('userToken', resposta.user_accessToken)
-            saveUserRefreshToken('userRefreshToken', resposta.user_refreshToken)
-          }  
+            saveUserToken('userToken', response.data.user_accessToken)
+            saveUserRefreshToken('userRefreshToken', response.data.user_refreshToken)
 
         }
 
@@ -201,7 +200,7 @@ export function TelaLogin(){
 
               </FormRow>
 
-              <TouchableOpacity>
+              <TouchableOpacity onPress={() => {navigation.navigate('RecuperarSenha');}}>
                 <Text style={styles.submitTextEsqueci}>Esqueci a senha</Text>
               </TouchableOpacity>
 
@@ -211,7 +210,7 @@ export function TelaLogin(){
 
               <View>
                 <TouchableOpacity style={styles.btnSubmit}>
-                  <Text style={styles.submitTextAcessar}  onPress={() => {entrarNaConta();}}>Acessar      <Image source={require('../../assets/entrar.png')}/></Text>
+                  <Text style={styles.submitTextAcessar}  onPress={() => {entrarNaConta();/*navigation.navigate('HomePage');*/}}>Acessar      <Image source={require('../../assets/entrar.png')}/></Text>
                 </TouchableOpacity>
               </View>
 
