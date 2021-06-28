@@ -17,6 +17,8 @@ function FotoPerfil() {
         )
 }
 
+//source={{uri: SyncStorage.get('LoginData').download_avatar}}  
+
 const styles = StyleSheet.create({
 
     PerfilVetor: {

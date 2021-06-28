@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, Image, ScrollView } from 'react-native'
+import SyncStorage from 'sync-storage';
 
 function NomeELogo() {
+
+    const [data, setData] = useState(JSON);
+
+    useEffect(() => {
+        
+        async function syncStorage(){
+            const data = await SyncStorage.init();
+            console.log('AsyncStorage is ready!', data);
+            setData(data)
+          }
+
+        syncStorage();
+        
+    }, []);
 
         return (
 
@@ -16,7 +31,7 @@ function NomeELogo() {
 
                 <ScrollView horizontal={true}>
 
-                    <Text style={styles.nome}>Fulano</Text>
+                    <Text style={styles.nome}>{SyncStorage.get('LoginData').primeiro_nome} {SyncStorage.get('LoginData').sobrenome}</Text>
 
                 </ScrollView>
 

@@ -8,7 +8,7 @@ export class PublicarPostagem extends React.Component{
 
     enviarPostagem() {
 
-        axios.post()
+        //axios.post()
 
     }
 
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
         marginTop: 50,
         minHeight: 300,
         maxHeight: 750,
-        width: 450,
+        width: 350,
         backgroundColor: '#674EA7',
     },
     inputPost: {

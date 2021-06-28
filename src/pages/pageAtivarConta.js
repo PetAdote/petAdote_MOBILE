@@ -41,7 +41,7 @@ export function AtivarContaPage(){
             setResposta(response)
             console.log(response);
 
-            navigation.navigate('HomePage')
+            navigation.navigate('LoginPetAdote')
 
                 Alert.alert(
                 'Conta ativada com sucesso!',

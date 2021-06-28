@@ -8,11 +8,8 @@ import { Dimensions } from 'react-native';
 import { getUserTokensSave } from '../utils/storeUserToken'
 import SyncStorage from 'sync-storage';
 import { saveAnimalData } from '../utils/storeDadoAnimal'
-import { useNavigation } from '@react-navigation/native';
 
-function PublicarAnuncio() {
-
-    const navigation = useNavigation();
+function PublicarAnuncio2() {
 
     useEffect(() => {
         
@@ -25,7 +22,7 @@ function PublicarAnuncio() {
         syncStorage();
 
         Alert.alert(
-            'Vamos capturar seus animais da base de dados!',
+            'Vamos puxar os albuns do seu animal',
             "Aperte OK, e espere um pouquinho, as vezes demora um pouco.",
             [
                 { text: "OK", onPress: () => capturaIDAnimal() }
@@ -34,8 +31,7 @@ function PublicarAnuncio() {
 
     }, []);
 
-    const [animais, setAnimais] = useState([]);
-    const [animalSelecionado, setAnimalSelecionado] = useState(JSON);
+    const [albumData, setAlbumData] = useState([]);
 
     function capturaIDAnimal(){
 
@@ -43,7 +39,7 @@ function PublicarAnuncio() {
         console.log('USER TOKEN ENVIADO COM SUCESSO ==>', SyncStorage.get('userToken'))
         console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
-        axios.get('http://179.213.88.128:3000/usuarios/animais/?getAllFromUser=' + SyncStorage.get('RespostaApi').cod_usuario, 
+        axios.get('http://179.213.88.128:3000/usuarios/animais/albuns/?getAllFromAnimal=' + SyncStorage.get('AnimalSelecionadoAnuncio').cod_animal, 
         {
             headers : {
                 'Authorization': `Bearer ${SyncStorage.get('userToken')}`
@@ -52,15 +48,7 @@ function PublicarAnuncio() {
         .then((response) => {
             console.log(response);
 
-            setAnimais(response.data.animais)
-
-            /*
-            animais.forEach((animal) => {
-
-                setNomesAnimais([...nomesAnimais, animal]);
-
-            });
-            */
+            setAlbumData(response.data.albuns)
 
         })
         .catch((error) => {
@@ -76,68 +64,6 @@ function PublicarAnuncio() {
                 );
             }
 
-/*
-            if(error.response.data.error.code == "RESOURCE_NOT_FOUND"){
-                Alert.alert(
-                    'Não há animais seus cadatrados!',
-                    "Va para o menu adicionar e selecione animal, e então cadastre um animal para poder fazer seu anuncio!",
-                    [
-                        { text: "OK", onPress: () => console.log("OK Pressed") }
-                    ]
-                );
-            }           
-*/
-
-        });
-
-    }
-
-    function CadastrarAnimal(){
-
-        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-        console.log('USER TOKEN ENVIADO COM SUCESSO ==>', SyncStorage.get('userToken'))
-        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-
-        axios.post('http://179.213.88.128:3000/usuarios/animais/', 
-        {
-
-
-            
-        },
-        {
-
-        headers : {
-            'Authorization': `Bearer ${SyncStorage.get('userToken')}`
-        }
-        })
-        .then((successResult) => {
-            console.log(successResult);
-
-            this.props.navigation.navigate('HomePage');
-
-            Alert.alert(
-                    'Anuncio feito com sucesso!',
-                    "Agora você pode ver ele na sua pagina inicial.",
-                    [
-                        { text: "OK", onPress: () => console.log("OK Pressed") }
-                    ]
-                );
-            
-        })
-        .catch((error) => {
-            console.log('Temos um problema ==>', error.response);
-
-            
-            if(error.response.data.code == "INVALID_REQUEST_FIELDS"){
-                Alert.alert(
-                    'Campos vazios foram detectados.',
-                    "Preencha todos os campos antes de enviar",
-                    [
-                        { text: "OK", onPress: () => console.log("OK Pressed") }
-                    ]
-                );
-            }
-            
         });
 
     }
@@ -158,41 +84,41 @@ function PublicarAnuncio() {
 
                             <Text style={styles.textEspacos}/>
 
-                            <Text style={styles.textCadastro}>Selecione o animal que deseja anunciar</Text>
+                            <Text style={styles.textCadastro}>Selecione um album</Text>
 
                             <Text style={styles.textEspacos}/>
 
                             <View>
 
                                 <ScrollView nestedScrollEnabled = {true}>
-
+                                    
                                     {
-                                        
-                                        animais.map(animal => 
-                                        (
-                                            <TouchableOpacity
-                                                onPress={() => {
-                                            
-                                                Alert.alert(
-                                                    'Animal selecionado ' + animal.nome,
-                                                    "Esse é o animal que deseja anunciar?",
-                                                    [
-                                                        { text: "NÃO", onPress: () => console.log("Operação cancelada pelo usuário.") },
-                                                        { text: "SIM", onPress: () => {saveAnimalData('AnimalSelecionadoAnuncio', animal), navigation.navigate('PublicarAnuncioAnimal2')}},
-                                                    ]
-                                                );
 
-                                            }}
-                                                style={styles.touchableAnimal}
-                                                key={animal.cod_animal}>
-                                                    <Text 
-                                                        style={styles.submitAnimal}>
-                                                        {animal.nome}
-                                                    </Text>
-                                                </TouchableOpacity>
-                                            )
-                                        )
+                                        albumData.map(album => (
+
+                                            <TouchableOpacity
+                                            onPress={() => {
                                         
+                                            Alert.alert(
+                                                'Album selecionado ' + album.titulo,
+                                                "Esse é o album que deseja usar?",
+                                                [
+                                                    { text: "NÃO", onPress: () => console.log("Operação cancelada pelo usuário.") },
+                                                    { text: "SIM", onPress: () => {console.log("O album foi selecionado: ", album)}},
+                                                ]
+                                            );
+
+                                        }}
+                                            style={styles.touchableAnimal}
+                                            key={album.cod_album}>
+                                                <Text 
+                                                    style={styles.submitAnimal}>
+                                                    {album.titulo}
+                                                </Text>
+                                            </TouchableOpacity>
+
+                                        ))
+
                                     }
 
                                 </ScrollView>
@@ -446,4 +372,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default PublicarAnuncio
+export default PublicarAnuncio2

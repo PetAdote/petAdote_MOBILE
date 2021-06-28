@@ -3,85 +3,45 @@ import { ButtonGroup } from 'react-native-elements'
 import * as ImagePicker from 'expo-image-picker'
 import { AutoGrowingTextInput } from 'react-native-autogrow-textinput';
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { getUserTokensSave } from '../utils/storeUserToken'
+import SyncStorage from 'sync-storage';
 
-export class SelecionarAnimal extends React.Component {
+function SelecionarAnimal() {
+    
+    useEffect(() => {
 
-    componentDidMount(){
-        
-        getUserTokensSave('userToken')
-        .then((result) => {
-            console.log(result)
-            this.state.token = result
-        })
-        
-    }
+        async function syncStorage(){
+            const data = await SyncStorage.init();
+            console.log('AsyncStorage is ready!', data);
+            setData(data)
+          }
 
-    constructor(props) {
-        super(props)
-            this.state = {
+    }), []
 
-                token : '',
-            }
+    useEffect(() => {
 
-        }
-        
-      [ console.log(image) ]
-
-    CadastrarAnimal(){
-
-        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-        console.log('USER TOKEN ENVIADO COM SUCESSO ==>', this.state.token)
-        console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
-
-        axios.post('http://179.213.88.128:3000/usuarios/animais/', 
+        axios.get('http://179.213.88.128:3000/animais/?getAllFromUser=' + SyncStorage.get('RespostaApi').cod_usuario,
         {
-
-
             
         },
         {
-
-        headers : {
-            'Authorization': `Bearer ${this.state.token}`
-        }
-        })
-        .then((successResult) => {
-            console.log(successResult);
-
-            this.props.navigation.navigate('HomePage');
-
-            Alert.alert(
-                    'Anuncio feito com sucesso!',
-                    "Agora você pode ver ele na sua pagina inicial.",
-                    [
-                        { text: "OK", onPress: () => console.log("OK Pressed") }
-                    ]
-                );
-            
-        })
-        .catch((error) => {
-            console.log('Temos um problema ==>', error.response);
-
-            
-            if(error.response.data.code == "INVALID_REQUEST_FIELDS"){
-                Alert.alert(
-                    'Campos vazios foram detectados.',
-                    "Preencha todos os campos antes de enviar",
-                    [
-                        { text: "OK", onPress: () => console.log("OK Pressed") }
-                    ]
-                );
+            headers : {
+            'Authorization': `Bearer ${SyncStorage.get('userToken') || SyncStorage.get('userInactiveToken') /*token*/}`
             }
-            
-          
-        });
+        }
+        ) 
 
+    }), []
+
+    const [token, setToken] = useState('');
+        
+    [ console.log(image) ]
+
+    function AnimalSelected(){
+        
     }
-
-  render() {
 
     return(
 
@@ -119,8 +79,6 @@ export class SelecionarAnimal extends React.Component {
         </View>
 
     )
-
-  }
 
 }
 

@@ -22,6 +22,9 @@ import PublicarAnuncio from './src/pages/FazerAnuncio'
 import SelecionarAnimal from './src/pages/pageSelectAnimal'
 import Recuperacao from './src/pages/PageEsqueciASenha'
 import RecuperacaoPage2 from './src/pages/PageEsqueciASenha2'
+import logout from './src/component/functions/sair'
+import dadosDaContaDoUsuario from './src/services/user/dadosDaConta'
+import PublicarAnuncio2 from './src/pages/FazerAnuncio2'
 
 function LoginPage() {
 
@@ -266,6 +269,24 @@ function App() {
           />
 
           <Stack.Screen
+            name="PublicarAnuncioAnimal2"
+            component={ PublicarAnuncio2 }
+            options =  {
+              {
+
+                headerShown: true,
+                headerLeft : VotaoDeVoltar,
+                headerTitleStyle: {
+                  color: '#674ea7',
+                },
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
+              }
+            }
+          />
+
+          <Stack.Screen
             name="selecioneOAnimal"
             component={ SelecionarAnimal }
             options =  {
@@ -315,6 +336,37 @@ function App() {
                 headerStyle: {
                   backgroundColor: '#674ea7',
                 }
+              }
+            }
+          />
+
+          
+          <Stack.Screen
+            name="sair"
+            component={ logout }
+            options =  {
+              {
+
+                headerShown: true,
+                headerLeft : VotaoDeVoltar,
+                headerTitleStyle: {
+                  color: '#674ea7',
+                },
+                headerStyle: {
+                  backgroundColor: '#674ea7',
+                }
+              }
+            }
+          />
+
+          <Stack.Screen
+            name="dadosDoUsuario"
+            component={ dadosDaContaDoUsuario }
+            options =  {
+              {
+
+                headerShown: false,
+            
               }
             }
           />

@@ -9,13 +9,30 @@ import { saveRefreshToken } from '../utils/storeInactiveTokens'
 import { saveUserToken } from '../utils/storeUserToken'
 import { saveUserRefreshToken } from '../utils/storeUserToken'
 import { saveRespostaApi } from '../utils/storeRespostaApiLogin'
+import AsyncStorage from '@react-native-community/async-storage'
+
+/*
+import { getUserTokensSave } from '../utils/storeUserToken'
+import { getTokensSave } from '../utils/storeInactiveTokens'
+import { getRespostaApi } from '../utils/storeRespostaApiLogin'
+*/
+
+import SyncStorage from 'sync-storage';
 
 export function TelaLogin(){
 
   const navigation = useNavigation();
 
   useEffect(() => {
-        
+
+    async function syncStorage(){
+      const data = await SyncStorage.init();
+      console.log('AsyncStorage is ready!', data);
+      setData(data)
+    }
+
+    syncStorage();
+
     meuAccessToken()
     .then((result) => {
         setToken(result)
@@ -27,10 +44,14 @@ export function TelaLogin(){
     })
   }, [])
 
+  const [tokenUser, setTokenUser] = useState('');
   const [token, setToken] = useState('');
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [resposta, setResposta] = useState(JSON);
+
+  const [dadosDoPerfil, setDadosDoPerfil] = useState(JSON);
+  const [data, setData] = useState('');
 
   function entrarNaConta(){
 
@@ -38,7 +59,7 @@ export function TelaLogin(){
     console.log('TOKEN ENVIADO COM SUCESSO ==>', token)
     console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
 
-    axios.post('http://179.213.88.128:3000/autenticacoes/usuarios/login', 
+    axios.post('http://179.213.88.128:3000/autenticacoes/usuarios/login',
     {
 
       email: email,
@@ -58,12 +79,12 @@ export function TelaLogin(){
 
         saveRespostaApi('RespostaApi', response.data);
 
-        navigation.navigate('HomePage');
+        navigation.navigate('dadosDoUsuario');
 
         if(response.data.exemplo_ativacao){
 
-          saveToken('userInactiveToken', response.data.inactiveUser_accessToken)
-          saveRefreshToken('userInactiveRefreshToken', response.data.inactiveUser_refreshToken)
+            saveToken('userInactiveToken', response.data.inactiveUser_accessToken)
+            saveRefreshToken('userInactiveRefreshToken', response.data.inactiveUser_refreshToken)
 
           Alert.alert(
             'Sua conta ainda não foi ativada',
@@ -73,7 +94,8 @@ export function TelaLogin(){
                 { text: "NÃO", onPress: () => console.log("NÃO Pressed") }
 
             ]
-          );       
+          ); 
+
         } else {
           
           console.log("Este usuario já confirmou sua conta")

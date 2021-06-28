@@ -78,7 +78,7 @@ class MenuPaginas extends React.Component {
 
           <Text></Text>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {this.props.navigation.navigate('sair');}}>
             <Text style={styles.textoAdicionar}>
               Sair
             </Text>

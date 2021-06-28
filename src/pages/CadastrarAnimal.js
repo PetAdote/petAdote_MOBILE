@@ -64,8 +64,6 @@ export class CadastroAnimal extends React.Component {
             this.updatePorte = this.updatePorte.bind(this)
         }
         
-      [ console.log(image) ]
-
     CadastrarAnimal(){
 
         console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++')
@@ -91,7 +89,7 @@ export class CadastroAnimal extends React.Component {
         {
 
         headers : {
-            'Authorization': `Bearer ${this.state.token}`
+            'Authorization': `Bearer ${this.state.token}`,
         }
         })
         .then((successResult) => {
@@ -116,6 +114,26 @@ export class CadastroAnimal extends React.Component {
                 Alert.alert(
                     'Campos vazios foram detectados.',
                     "Preencha todos os campos antes de enviar",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_INPUT_RACA"){
+                Alert.alert(
+                    'Nome da raça do animal inválido.',
+                    "Não pode haver nenhum caractere especial(#, -, @, etc...) ou espaço no nome da raça.",
+                    [
+                        { text: "OK", onPress: () => console.log("OK Pressed") }
+                    ]
+                );
+            }
+
+            if(error.response.data.code == "INVALID_INPUT_DATA_NASCIMENTO"){
+                Alert.alert(
+                    'Data de nascimento inválida.',
+                    "Você deve ter digitado errado, o correto seria aaaa-mm-dd.",
                     [
                         { text: "OK", onPress: () => console.log("OK Pressed") }
                     ]

@@ -3,18 +3,31 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Alert } from 'react-native'
 import { getTokensSave } from '../utils/storeInactiveTokens'
 import { useNavigation } from '@react-navigation/native'; 
+import meuAccessToken from "../services/AutenticarCliente";
 
 export function RecuperacaoPage2(){
 
     const navigation = useNavigation();
 
     useEffect(() => {
+
+        meuAccessToken()
+        .then((result) => {
+            setToken(result)
+        })
+        .catch((error) =>{
+            console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
+            console.log("Opa, temos um probleminha aqui: ", error.response)
+            console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
+        })
+/*
         async function getToken() {
             const result = await getTokensSave('userInactiveToken');
             setToken(result)
         }
 
         getToken();
+        */
     }, [])
 
     const [token, setToken] = useState('');

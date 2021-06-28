@@ -3,18 +3,32 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Image, Alert } from 'react-native'
 import { getTokensSave } from '../utils/storeInactiveTokens'
 import { useNavigation } from '@react-navigation/native'; 
+import meuAccessToken from "../services/AutenticarCliente";
 
 export function Recuperacao(){
 
     const navigation = useNavigation();
 
     useEffect(() => {
+
+        meuAccessToken()
+        .then((result) => {
+            setToken(result)
+        })
+        .catch((error) =>{
+            console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
+            console.log("Opa, temos um probleminha aqui: ", error.response)
+            console.log('------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
+        })
+
+        /*
         async function getToken() {
             const result = await getTokensSave('userInactiveToken');
             setToken(result)
         }
 
         getToken();
+        */
     }, [])
 
     const [token, setToken] = useState('');
@@ -54,7 +68,39 @@ export function Recuperacao(){
 
           })
           .catch((error) => {
-            console.log("Temos um problema ==>", error);
+            console.log("Temos um problema ==>", error.response);
+
+            if(error.response.data.code == 'USER_HAS_ACTIVE_TOKEN'){
+                Alert.alert(
+                'Já existe um código de recuperação para este email!',
+                "Cheque seu email e veja se não esta na caixa 'spam'!",
+                [
+                    { text: "OK", onPress: () => console.log("Ok")},
+                ]
+                );   
+            }
+            
+            
+            if(error.response.data.code == 'INVALID_EMAIL_INPUT'){
+                Alert.alert(
+                'Entrada do email invalida!',
+                "Digite-o novamente",
+                [
+                    { text: "OK", onPress: () => console.log("Ok")},
+                ]
+                );   
+            }
+
+            if(error.response.data.error.code == 'INTERNAL_SERVER_ERROR'){
+                Alert.alert(
+                'Provavelmente esse email não foi cadastrado',
+                "Volte pra tela de login e cadastre-se",
+                [
+                    { text: "OK", onPress: () => console.log("Ok")},
+                ]
+                );   
+            }
+
 
             /*
             if(error.data.code == 'TOKEN_NOT_FOUND'){

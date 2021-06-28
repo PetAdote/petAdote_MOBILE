@@ -303,7 +303,7 @@ export function PerfilUsuario() {
 
                         <View style={styles.BannerStyle}>
 
-                            <Image source={require('../../assets/banner.jpg')} style={styles.ImageBannerStyle}/>
+                            <Image source={{uri: dadosDoPerfil.download_banner}} style={styles.ImageBannerStyle}/>
 
                         </View>
                     
